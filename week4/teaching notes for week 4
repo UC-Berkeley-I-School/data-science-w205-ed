@@ -1,0 +1,19 @@
+Notes for week 4
+Agenda:
+
+
+I demo re-joining your instance
+Bring up AWS console
+look at dns and volumes
+ssh -i
+df
+df -h 
+fdisk -l
+whoami
+mount /dev/xvdf/ /data
+df -h
+
+explain fstab
+man
+
+
