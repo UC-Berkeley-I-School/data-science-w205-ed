@@ -1,0 +1,88 @@
+BigQuery Breakout
+======================================================
+We will use Google BigQuery to explore a public dataset in the free tier.  
+
+Follow the instruction here:
+https://cloud.google.com/bigquery/web-ui-quickstart#query
+
+or go directly here:
+https://bigquery.cloud.google.com/
+
+If you want, you can setup a free trial and load your own data (e.g., the crime data we've seen before). Ignore for now.
+
+
+======================================================
+Dataset: natality
+======================================================
+Q1: Find whether there were more male or female children born on your birthdate.
+
+Query:
+
+
+Answer:
+
+
+======================================================
+Q2: Find the average age of mother and father in each statew205
+
+Query:
+
+
+Answer:
+
+
+======================================================
+Q3: Find what is the average age of the mother and the father at the time the child is born.
+ 
+Query:
+
+
+Answer:
+
+ 
+======================================================
+Q4: What is the average number of weeks of pregnancy (gestation_weeks)?
+
+
+Query:
+
+
+Answer:
+
+
+======================================================
+Q5: What is the trend in the average number of cigarettes smoked by the mother per day over the years (2003-)? 
+ 
+Query:
+
+
+Answer:
+ 
+
+======================================================
+Q6: How about drinks_per_week?
+
+
+Query:
+
+
+Answer:
+
+
+======================================================
+Q7: Now that you have some understanding of the data, formulate an interesting hypothesis/question and figure out the answer.  We will report back to class. Curiosity is an essential part of being a data scientist.   
+
+Question:
+
+
+Answer:
+
+======================================================
+Q8: How many GB of data you have queried? How fast?
+ 
+
+Answer:
+
+
+
+
