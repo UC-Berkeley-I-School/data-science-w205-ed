@@ -1,0 +1,45 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww15580\viewh16500\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Architectures for serving:\
+\
+depends on amount and how its getting queried\
+Redis is currently a common choice\
+if I'm using Redis, yes, it all stays in memory\
+or I do the math wrong and it starts spilling to disk and haha oh who needs performance\
+\
+\
+For things that fit in memory, memory.\
+For things that fit on the disk and the IOPS of one machine, rocksdb.\
+For lots of small things, hosted key value stores ala dynamodb.\
+\
+If 10 minutes can be afforded to reboot a host, sometimes partitioned message queues like Kafka or Kinesis are a good way to get single node things to scale and be fault tolerant and not be a slave to disk IOPS.  \
+\
+For things averaging 100k per object or more, object stores like S3. (Netflix)\
+\
+For systems that prevent early binding of such assumptions, cassandra.  I stay minimal about schema, only enough to get the properties that I want the database to maintain.  \
+\
+Hbase: there are easier to configure routes to hell then Hbase.  \
+Cloudera empt.  We never recommend a client uses Hbase.\
+\
+\
+\
+jeff283 [10:35 AM] \
+And one teaching point I like to convey:  drive your decisions about information retrieval technology with data.  I know it sounds obvious, but do people understand how, let alone actually take the time?\
+\
+Example 1: if you are dealing with anything larger than memory, make the histogram of how many times each thing is actually getting requested, and look at it sorted by frequency.  Multiply the buckets by the size of the object they represent.  You can read right off of that graph what the hit rate for a cache of any size will be.\
+\
+Example 2: Take the size distribution from example 1.  Write a function to randomly select among N randomly generated garbage objects with the same size distribution.  To evaluate a storage mechanism, write a for loop to time stores  or or time fetches (having already stored something of course).  Histogram and sort by duration.\
+\
+Extra credit: Repeat example 2 inside of a docker container with netfilter settings to drop and delay packets.  This is what will happen to your data in production under bad network conditions.\
+\
+ed [10:46 AM] \
+Great example.\
+\
+jeff283 [11:03 AM] \
+Now haven\'92t we stumbled on a holy war . . . :wink:  I\'92m not sure if I want to chip in with the more moderate points of view or the more extreme. . . . you know.  \'93Fuck malloc, I want mmap\'94. (edited)\
+}

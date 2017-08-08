@@ -1,0 +1,128 @@
+BigQuery Breakout
+==============================
+FYI: It seems that you can use BigQuery without setting up billing as long as you query a public dataset and stay in the free tier for queries.  Details here: https://cloud.google.com/bigquery/web-ui-quickstart#query
+
+If you want, you can setup the free trial and load your own data (e.g., the crime data we've seen before).
+
+Anyone else, 
+
+Dataset:
+
+Queries:
+Example Date: 23 May 1979
+
+###
+
+Question: 
+Find whether there were more male or female children born on your birthdate. How about the date: 23 May 1979?
+
+Query:
+SELECT count(*) AS number, is_male 
+FROM  publicdata:samples.natality
+WHERE year=1973 AND month=1 AND day=6
+GROUP BY is_male
+LIMIT 10;
+
+Answer:
+Row	number	is_male	 
+1	2223	false	 
+2	2331	true	 
+
+###
+
+Question: Find the average age of mother and father by state
+Query:
+SELECT state, avg(father_age) AS fatherAvgAge, avg(mother_age) AS motherAvgAge 
+FROM  publicdata:samples.natality
+--WHERE is_male=TRUE AND year=1979 AND month=5 AND day=23
+GROUP BY state
+ORDER BY motherAvgAge ASC
+LIMIT 60;
+
+Answer:
+state	fatherAvgAge	motherAvgAgeMS	46.9800537	24.310802AR	40.25343501	24.48390439WV	37.88260498	24.74342607OK	38.43357159	24.75991987AL	45.82219606	24.81434174LA	45.40981657	24.85400116KY	40.90839574	24.88087502SC	47.14934821	25.010001TN	40.94672919	25.05770683WY	35.58445151	25.25297735NM	43.99808921	25.36188805NC	40.49597387	25.41207685IN	38.54120891	25.41735807TX	39.41098615	25.44574327GA	40.69230502	25.55435883KS	35.00877228	25.61061471MO	41.90171281	25.61724243ID	33.86024353	25.71474252ME	36.80167093	25.77968947OH	37.59071951	25.80430899MT	35.33669191	25.87285776AZ	43.03730457	25.87494599MI	41.49977883	25.90512114IA	36.63849723	25.92021279FL	41.18771914	25.95703787SD	36.83324929	26.02853907NV	43.40887432	26.10494808OR	38.4671511	26.11062274UT	33.83229664	26.11826807NE	36.33243738	26.18209831IL	36.14766445	26.22206357ND	34.80479912	26.26986823AK	38.16454287	26.31443043DE	48.0545077	26.34094741VA	43.18093024	26.34147862CO	38.26684147	26.39036863WI	42.20126057	26.40469605VT	33.2326254	26.4849401WA	38.75130747	26.52827608PA	32.55849615	26.55194362MD	32.8220269	26.65092405RI	38.72912966	26.701108HI	36.88165789	26.75403987CA	33.50689461	26.77499287NH	35.26733169	26.87719524MN	36.1011858	26.94322661NY	41.51787636	27.1941711DC	53.35039801	27.37823028	40.17541344	27.40050705NJ	38.3676779	27.59192392CT	37.81351569	27.63881165MA	37.61389906	27.74127901
+
+###
+
+Question:
+Find what is the average age of the mother and the father at the time the child is born.
+ 
+Query:
+SELECT avg(mother_age) as motherAge, avg(father_age) AS fatherAvgAge 
+FROM  publicdata:samples.natality;
+
+Answer:
+1	26.276555156417626	39.001037577875934
+ 
+###
+
+Question:
+What is the average number of weeks of pregnancy (gestation_weeks)?
+
+ 
+Query:
+SELECT avg(gestation_weeks) as avgWeeks
+FROM  publicdata:samples.natality
+
+Answer:
+41.93360012230791
+###
+
+Question:
+What is the trend in average number of cigarettes smoked by the mother per day over the years (2003-)? 
+ 
+Query:
+SELECT source_year, avg(cigarettes_per_day) as avgCig
+FROM  publicdata:samples.natality
+WHERE source_year >= 2003
+GROUP BY source_year
+ORDER BY source_year ASC;
+
+Answer:
+1	2003	21.054676769268873	 
+2	2004	17.48445120242166	 
+3	2005	18.076959610310535	 
+4	2006	17.383377707352576	 
+5	2007	11.06863612730511
+6	2008	11.107291747494058 
+ 
+
+###
+ 
+Question:
+How about drinks_per_week?
+
+Query:
+SELECT source_year, avg(drinks_per_week) as avgCig
+FROM  publicdata:samples.natality
+WHERE source_year >= 2003
+GROUP BY source_year
+ORDER BY source_year ASC;
+
+Answer:
+1	2003	1.3156453356150504	 
+2	2004	1.094701216435899	 
+3	2005	1.044830525674853	 
+4	2006	0.8900660543359098	 
+5	2007	null
+6	2008	null
+
+
+ 
+###
+
+Question: How many GB of data you have queried? How fast?
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Zeppelin Tutorial
+==============================
+https://zeppelin.incubator.apache.org/docs/tutorial/tutorial.html
